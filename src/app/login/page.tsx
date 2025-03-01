@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/stores/authStore";
 import { loginUser } from "@/lib/api";
 import { useRouter } from "next/navigation";
 
@@ -17,22 +17,34 @@ export default function LoginPage() {
 
     if (res.token) {
       login(res.user, res.token);
-
-      // Redirect based on role
-      if (res.user.role === "admin") router.push("/admin");
-      else if (res.user.role === "seller") router.push("/seller");
-      else router.push("/buyer");
+      router.push(`/${res.user.role}`);
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded-lg">
-        <h2 className="text-xl font-bold mb-4">Login</h2>
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="mb-2 p-2 border w-full" />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="mb-4 p-2 border w-full" />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2">Login</button>
-      </form>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 shadow-lg rounded-lg w-96">
+        <h2 className="text-2xl font-bold mb-4 text-center text-gray-900">Login</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-2 border rounded mb-3 focus:ring focus:ring-blue-300 text-gray-900"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300 text-gray-900"
+          />
+          <button type="submit" className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
