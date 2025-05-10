@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { Fetch } from "../lib/api"
 import Link from "next/link";
 
 interface AuctionItem {
@@ -15,24 +16,21 @@ interface AuctionItem {
 export default function HomePage() {
   const [items, setItems] = useState<AuctionItem[]>([]);
 
+  const getListings = async () => {
+    const response = await Fetch("/auctions");
+    console.log(response)
+    if (response) {
+      const data = await response.auctions;
+      setItems(data);
+    } else {
+      console.error("Failed to fetch auction items");
+    }
+  }
+
+
   useEffect(() => {
     // Placeholder data until backend is ready
-    setItems([
-      {
-        id: "1",
-        title: "Vintage Watch",
-        description: "A classic timepiece from the 1950s.",
-        image: "https://via.placeholder.com/300x200",
-        currentBid: 120,
-      },
-      {
-        id: "2",
-        title: "Luxury Handbag",
-        description: "Designer handbag in pristine condition.",
-        image: "https://via.placeholder.com/300x200",
-        currentBid: 450,
-      },
-    ]);
+    getListings();
   }, []);
 
   return (

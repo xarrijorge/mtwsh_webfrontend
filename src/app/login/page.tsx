@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useAuthStore } from "@/stores/authStore";
-import { loginUser } from "@/lib/api";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -13,12 +12,9 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await loginUser({ email, password });
-
-    if (res.token) {
-      login(res.user, res.token);
-      router.push(`/${res.user.role}`);
-    }
+    const res = await login({ email, password });
+    console.log("response", res)
+    router.push("/");
   };
 
   return (

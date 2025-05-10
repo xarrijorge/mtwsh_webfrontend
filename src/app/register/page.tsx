@@ -1,34 +1,53 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { registerUser } from "@/lib/api";
+import clsx from "clsx";
 
-export default function RegisterPage() {
-  const [form, setForm] = useState({ name: "", email: "", password: "", role: "buyer" });
+export default function RoleSelectPage() {
+  const [selected, setSelected] = useState<"buyer" | "seller">("buyer");
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await registerUser(form);
+  const handleNext = () => {
+    router.push(`/register/${selected}`);
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 shadow-lg rounded-lg w-96">
-        <h2 className="text-2xl font-bold mb-4 text-center text-gray-900">Register</h2>
-        <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Name" onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full p-2 border rounded mb-3 focus:ring focus:ring-blue-300 text-gray-900" />
-          <input type="email" placeholder="Email" onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full p-2 border rounded mb-3 focus:ring focus:ring-blue-300 text-gray-900" />
-          <input type="password" placeholder="Password" onChange={(e) => setForm({ ...form, password: e.target.value })} className="w-full p-2 border rounded mb-3 focus:ring focus:ring-blue-300 text-gray-900" />
-          <select onChange={(e) => setForm({ ...form, role: e.target.value })} className="w-full p-2 border rounded mb-4 bg-white text-gray-900">
-            <option value="buyer">Buyer</option>
-            <option value="seller">Seller</option>
-            <option value="admin">Admin</option>
-          </select>
-          <button type="submit" className="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
-            Register
-          </button>
-        </form>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
+      <h1 className="text-3xl font-bold text-center mb-6">I am a...</h1>
+
+      <div className="flex gap-6 mb-6 w-full max-w-md">
+        <button
+          onClick={() => setSelected("buyer")}
+          className={clsx(
+            "flex-1 p-6 rounded-lg border-2 text-center font-semibold transition-all",
+            selected === "buyer"
+              ? "border-blue-600 bg-blue-50 text-blue-700"
+              : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
+          )}
+        >
+          Buyer
+        </button>
+
+        <button
+          onClick={() => setSelected("seller")}
+          className={clsx(
+            "flex-1 p-6 rounded-lg border-2 text-center font-semibold transition-all",
+            selected === "seller"
+              ? "border-green-600 bg-green-50 text-green-700"
+              : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
+          )}
+        >
+          Seller
+        </button>
       </div>
+
+      <button
+        onClick={handleNext}
+        className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition"
+      >
+        Continue
+      </button>
     </div>
   );
 }
