@@ -108,7 +108,7 @@ export default function SellerDashboardPage() {
                           onClick={() => alert(`TODO: Close ${auction.id}`)}
                           className="text-red-600 hover:underline"
                         >
-                          Close
+                         {auction.status === "OPEN" ? "Close" : "Reopen"} 
                         </button>
                       </td>
                     </tr>
