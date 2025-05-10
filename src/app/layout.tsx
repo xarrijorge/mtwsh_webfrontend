@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import { ReactNode } from "react";
+import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: "Mtwsh Admin",
@@ -9,7 +10,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-gray-50 text-gray-900">{children}</body>
+      <body className="bg-gray-50 text-gray-900">
+        <Navbar />
+        {children}
+        </body>
     </html>
   );
 }

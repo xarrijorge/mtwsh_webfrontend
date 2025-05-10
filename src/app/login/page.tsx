@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "next/navigation";
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -40,6 +41,11 @@ export default function LoginPage() {
             Login
           </button>
         </form>
+        {/* add a link to register */}
+        <p className="mt-4 text-center text-gray-600">
+          Don't have an account?{" "}
+          <Link href="/register" className="text-blue-600 hover:underline">Register</Link>
+        </p>
       </div>
     </div>
   );
