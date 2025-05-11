@@ -20,3 +20,8 @@
 .animate-fade-in {
     animation: fade-in 0.15s ease-out forwards;
 }
+
+/* add pointer hover for all action elemetns */
+button:hover{
+    cursor: pointer;
+}

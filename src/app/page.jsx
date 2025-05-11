@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { Fetch } from "../lib/api";
 import Link from "next/link";
+import Carousel from '../components/Carousel';
 
 function getConditionDescription(condition) {
   switch (condition) {
@@ -68,7 +69,7 @@ export default function HomePage() {
               items.map((item) => (
                 <Link key={item.id} href={`/listing/${item.id}`} className="flex justify-center">
                   <div className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105 h-full w-full max-w-xs">
-                    <img src={item.image} alt={item.title} className="w-full h-56 object-cover" />
+                    <img src={item.images[0]} alt={item.title} className="w-full h-56 object-cover" />
                     <div className="p-5">
                       <h2 className="text-2xl font-semibold text-gray-900 text-center">{item.title}</h2>
                       <p className="text-gray-600 text-sm mt-2 text-center">{getConditionDescription(item.condition)}</p>
