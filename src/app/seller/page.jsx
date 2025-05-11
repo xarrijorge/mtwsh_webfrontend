@@ -5,10 +5,16 @@ import ProtectedRoute from "@/lib/protectedRoute";
 import { useAuthStore } from "@/stores/authStore";
 import { Fetch } from "@/lib/api";
 
+import Modal from "@/components/Modal";
+import CreateAuctionForm from "@/components/CreateAuctionForm";
+import {useAuctionStore} from "@/stores/auctionStore"
+
 export default function SellerDashboardPage() {
   const { user } = useAuthStore();
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const {isCreateOpen, openCreateModal, closeCreateModal} = useAuctionStore()
 
   const fetchAuctions = async () => {
     try {
@@ -56,7 +62,7 @@ export default function SellerDashboardPage() {
           {/* Create Auction Button */}
           <div className="mb-6 flex justify-end">
             <button
-              onClick={() => alert("TODO: Open create modal")}
+              onClick={openCreateModal}
               className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
             >
               + Create Auction
@@ -119,6 +125,12 @@ export default function SellerDashboardPage() {
           </div>
         </div>
       </div>
+      <Modal isOpen={isCreateOpen} onClose={closeCreateModal}>
+        <CreateAuctionForm onSuccess={() => {
+          closeCreateModal();
+          fetchAuctions(); // Refresh listings
+        }} />
+      </Modal>
     </ProtectedRoute>
   );
 }
